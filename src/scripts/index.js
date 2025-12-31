@@ -1,6 +1,13 @@
+import { LinkedList } from "./linked-list.js";
+
 function HashMap() {
   const loadFactor = 0.75;
   let capacity = 16;
+
+  const buckets = [];
+  for (let i = 0; i < capacity; i++) {
+    buckets.push(LinkedList());
+  }
 
   return {
     hash(key) {
@@ -13,10 +20,16 @@ function HashMap() {
 
       return hashCode;
     },
-    
+
+    showContents() {
+      buckets.forEach((linkedList) => {
+        console.log(linkedList.toString());
+      });
+    }
+
   }
 }
 
-
 const hashMap = HashMap();
 
+hashMap.showContents();
