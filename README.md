@@ -1,7 +1,5 @@
-<h1 align="center"> 📜 Efficientus 📜 <h1>
+# HashMap
 
-<h3 align="center">“<i>Invenire viam efficientissimam</i> -- Find the most efficient way”</h3>
+A TOP practice project to master the quintessential *hashmap*.
 
-___
-
-A TOP to-do list project.  I hope you find it an innovative and intuitive app to help you live/love your life.
+![HashMap](./src/assets/images/hashmap-2453269496.png)
