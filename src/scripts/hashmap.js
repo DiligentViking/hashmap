@@ -22,9 +22,11 @@ export function HashMap() {
     },
 
     showContents() {
-      buckets.forEach((linkedList) => {
-        console.log(linkedList.toString());
+      let returnString = '';
+      buckets.forEach((linkedList, i) => {
+        returnString += `${i}  =>  ${linkedList.toString()}\n`;
       });
+      return returnString;
     }
 
   }
