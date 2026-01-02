@@ -68,6 +68,50 @@ export function LinkedList() {
       return false;
     },
 
+    containsKey(key) {  // hashmap
+      let curr = head.nextNode;
+      while (curr) {
+        if (key in curr.value) return true;
+        curr = curr.nextNode;
+      }
+      return false;
+    },
+
+    getKeyValue(key) {  // hashmap
+      let curr = head.nextNode;
+      while (curr) {
+        if (key in curr.value) return curr.value[key];
+        curr = curr.nextNode;
+      }
+      return null;
+    },
+
+    updateKey(key, value) {  // hashmap
+      let curr = head.nextNode;
+      while (curr) {
+        if (key in curr.value) {
+          curr.value[key] = value;
+          return;
+        }
+        curr = curr.nextNode;
+      }
+      return Error('key does not exist');
+    },
+
+    removeEntryByKey(key) {  // hashmap
+      let prev = head;
+      let curr = head.nextNode;
+      while (curr) {
+        if (key in curr.value) {
+          prev.nextNode = curr.nextNode;
+          return true;
+        }
+        prev = curr;
+        curr = curr.nextNode;
+      }
+      return false;
+    },
+
     findIndex(value) {
       let count = 0;
       let curr = head.nextNode;
@@ -104,7 +148,7 @@ export function LinkedList() {
       let string = '';
       let curr = head.nextNode;
       while (curr) {
-        string += `( ${curr.value} ) -> `;
+        string += `( ${JSON.stringify(curr.value)} ) -> `;
         curr = curr.nextNode;
       }
       string += 'null';
