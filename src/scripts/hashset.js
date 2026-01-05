@@ -1,6 +1,6 @@
 import { LinkedList } from "./linked-list.js";
 
-export function HashMap() {
+export function HashSet() {
   const loadFactor = 0.75;
   let capacity = 16;
 
@@ -34,19 +34,14 @@ export function HashMap() {
     },
 
 
-    set(key, value) {
+    set(key) {
       const index = this.fnv1aHash(key);
       const bucket = buckets[index];
-      if (bucket.containsKey(key)) {
-        bucket.updateKey(key, value);
-      } else {
-        const entry = {[key]: value};
-        bucket.append(entry);
-        size++;
-      }
+      if (!bucket.contains(key)) bucket.append(key);
+      size++;
 
       if (size > capacity * loadFactor) {
-        const oldBuckets = this.entries();
+        const oldBuckets = this.keys();
         buckets.length = 0;
         capacity *= 2;
         size = 0;
@@ -54,28 +49,22 @@ export function HashMap() {
           buckets.push(LinkedList());
         }
         for (const oldBucket of oldBuckets) {
-          this.set(oldBucket[0], oldBucket[1]);
+          this.set(oldBucket);
         }
       }
-    },
-
-    get(key) {
-      const index = this.fnv1aHash(key);
-      const bucket = buckets[index];
-      return bucket.getKeyValue(key);
     },
 
     has(key) {
       const index = this.fnv1aHash(key);
       const bucket = buckets[index];
-      return bucket.containsKey(key) ?? false;
+      return bucket.contains(key) ?? false;
     },
 
     remove(key) {
       const index = this.fnv1aHash(key);
       const bucket = buckets[index];
-      size--;
-      return bucket.removeEntryByKey(key);
+      size--;  // TODO: Fix this and in HashMap
+      return bucket.removeAt(bucket.findIndex(key));
     },
 
     length() {
@@ -98,29 +87,7 @@ export function HashMap() {
       for (const bucket of buckets) {
         const numEntries = bucket.size();
         for (let i = 0; i < numEntries; i++) {
-          returnArr.push(Object.keys(bucket.at(i))[0]);
-        }
-      }
-      return returnArr;
-    },
-
-    values() {
-      const returnArr = [];
-      for (const bucket of buckets) {
-        const numEntries = bucket.size();
-        for (let i = 0; i < numEntries; i++) {
-          returnArr.push(Object.values(bucket.at(i))[0]);
-        }
-      }
-      return returnArr;
-    },
-
-    entries() {
-      const returnArr = [];
-      for (const bucket of buckets) {
-        const numEntries = bucket.size();
-        for (let i = 0; i < numEntries; i++) {
-          returnArr.push(Object.entries(bucket.at(i))[0]);
+          returnArr.push(bucket.at(i));
         }
       }
       return returnArr;
